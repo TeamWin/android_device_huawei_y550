@@ -52,13 +52,13 @@ TARGET_UNIFIED_DEVICE := true
 # Kernel
 BOARD_KERNEL_BASE        := 0x80000000
 BOARD_KERNEL_PAGESIZE    := 2048
-BOARD_KERNEL_TAGS_OFFSET := 0x00000100
-BOARD_RAMDISK_OFFSET     := 0x01000000
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom user_debug=30 msm_rtb.filter=0x3F ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 androidboot.selinux=permissive
-BOARD_KERNEL_SEPARATED_DT := true
-TARGET_KERNEL_CONFIG := y550_defconfig
-TARGET_KERNEL_SOURCE := kernel/huawei/y550
-BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
+TARGET_CUSTOM_KERNEL_HEADERS := device/huawei/y550/include
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 earlyprintk androidboot.selinux=permissive lpm_levels.sleep_disabled=1 androidboot.selinux=permissive
+TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/kernel
+BOARD_KERNEL_SEPARATED_DT := #bypass
+BOARD_CUSTOM_BOOTIMG_MK := #bypass
+BOARD_MKBOOTIMG_ARGS := --dt device/huawei/y550/dt.img --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x000002E0
+
 
 # Partitions
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -75,34 +75,20 @@ BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 
 # TWRP
 RECOVERY_VARIANT := twrp
-TW_NEW_ION_HEAP := true
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/twrp/twrp.fstab
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 TW_THEME := portrait_hdpi
 RECOVERY_SDCARD_ON_DATA := true
-TW_TARGET_USES_QCOM_BSP := true
-TW_BOARD_CUSTOM_GRAPHICS := ../../../device/huawei/y550/twrp/graphics.c
-TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+TWHAVE_SELINUX := true
+TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 TW_INCLUDE_CRYPTO := true
-TW_FLASH_FROM_STORAGE := true
-TW_INTERNAL_STORAGE_PATH := "/data/media"
-TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
 TW_EXTERNAL_STORAGE_PATH := "/external_sd"
 TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
-TW_DEFAULT_EXTERNAL_STORAGE := true
-TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
-TARGET_RECOVERY_QCOM_RTC_FIX := true
-BOARD_SUPPRESS_SECURE_ERASE := true
 TW_INPUT_BLACKLIST := "accelerometer"
-TWRP_EVENT_LOGGING := true
 
 #Use dlmalloc instead of jemalloc for mallocs
 MALLOC_IMPL := dlmalloc
-
-# Vold
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/file
-BOARD_VOLD_DISC_HAS_MULTIPLE_MAJORS := true
-BOARD_VOLD_MAX_PARTITIONS := 65
 
 # Include tzdata for recovery
 PRODUCT_COPY_FILES += \

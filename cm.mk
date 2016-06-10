@@ -15,7 +15,4 @@
 # Inherit from nx510j device
 $(call inherit-product, device/huawei/y550/y550.mk)
 
-# Inherit some common CM stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
-
 PRODUCT_NAME := cm_y550
