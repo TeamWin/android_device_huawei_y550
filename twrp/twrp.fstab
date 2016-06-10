@@ -8,7 +8,7 @@
 /data         ext4   /dev/block/bootdevice/by-name/userdata
 /recovery     emmc   /dev/block/bootdevice/by-name/recovery
 /misc         emmc   /dev/block/bootdevice/by-name/misc
-/firmware     vfat   /dev/block/bootdevice/by-name/modem
+/firmware     vfat   /dev/block/bootdevice/by-name/modem        flags=backup=1
 /system       ext4   /dev/block/bootdevice/by-name/system
 
 /external_sd  vfat   /dev/block/mmcblk1p1 /dev/block/mmcblk1         flags=display="Micro SDcard";storage;wipeingui;removable
